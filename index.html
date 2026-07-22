@@ -4,6 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ClearStep — The next step, not another question</title>
+<meta name="description" content="ClearStep is a CBT app for ADHD and social anxiety that gives you one clear instruction at a time — no journaling, no open-ended questions. Launching on iOS &amp; Android, July 30, 2026.">
+
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="ClearStep — Skip the reflection. Get the step.">
+<meta property="og:description" content="A CBT app for ADHD and social anxiety that tells you what to do next, instead of asking open-ended questions. Launching on iOS &amp; Android, July 30, 2026.">
+<meta property="og:image" content="https://clearstepapp.github.io/Clearstep-app/og-image.png">
+<meta property="og:url" content="https://clearstepapp.github.io/Clearstep-app/">
+<meta property="og:site_name" content="ClearStep">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ClearStep — Skip the reflection. Get the step.">
+<meta name="twitter:description" content="A CBT app for ADHD and social anxiety that tells you what to do next. Launching on iOS &amp; Android, July 30, 2026.">
+<meta name="twitter:image" content="https://clearstepapp.github.io/Clearstep-app/og-image.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -248,6 +266,25 @@
   .safety h3{ font-size:1.1rem; margin-bottom:8px; }
   .safety p{ margin:0; color: var(--ink-soft); font-size:0.97rem; max-width: 60ch; }
 
+  /* ---------- FOUNDER NOTE ---------- */
+  .founder-note{
+    max-width: 680px;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--moss);
+    border-radius: 6px;
+    padding: 34px 38px;
+  }
+  .founder-note p{
+    font-family: 'Fraunces', serif;
+    font-size: 1.12rem;
+    line-height: 1.6;
+    color: var(--ink);
+    margin: 0 0 18px;
+  }
+  .founder-note p:last-of-type{ margin-bottom: 22px; }
+  .founder-sign{ font-size: 0.76rem; color: var(--moss-dark); }
+
   /* ---------- CTA ---------- */
   .cta{
     text-align:center; padding: 90px 0 100px;
@@ -307,6 +344,7 @@
       <h1>Skip the reflection.<br>Get <em>the step</em>.</h1>
       <p class="lede">ClearStep is a CBT-based app that gives you one clear instruction at a time. No journaling prompts. No "how does that make you feel?" Just the next thing to do.</p>
       <div class="launch-note mono">Launching on iOS &amp; Android — July 30, 2026</div>
+      <p style="margin-top:10px; font-size:0.85rem; color: var(--ink-soft);">Free to download.</p>
       <div class="hero-actions">
         <a href="#join" class="btn-primary">Get notified at launch</a>
         <a href="#how" class="btn-ghost">See how it works</a>
@@ -449,11 +487,26 @@
   </div>
 </section>
 
+<section id="founder">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow mono">Why I built this</span>
+      <h2>Built from the inside, not from a textbook.</h2>
+    </div>
+    <div class="founder-note">
+      <p>I was diagnosed with ADHD and social anxiety as an adult — later than most, and after years of not having a name for why certain things felt so much harder than they seemed to for everyone else.</p>
+      <p>Once I had the diagnosis, I went looking for tools that could actually help day to day. What I found were apps built around journaling, reflection, and open-ended questions — useful for some people, but exactly the kind of thing my brain struggles to engage with. I didn't need something to ask me how I felt. I needed something to tell me what to do next.</p>
+      <p>ClearStep is the tool I wished existed: no blank pages, no long sessions, just a clear next step, built around how ADHD and social anxiety actually show up day to day. If that sounds familiar, I built this for you.</p>
+      <span class="founder-sign mono">— Founder, ClearStep</span>
+    </div>
+  </div>
+</section>
+
 <section id="join" class="cta">
   <div class="wrap">
     <span class="eyebrow mono" style="margin-bottom:18px;">iOS &amp; Android — July 30, 2026</span>
     <h2>Be first to download ClearStep</h2>
-    <p>Leave your email and we'll send you the download link the moment ClearStep goes live on the App Store and Google Play.</p>
+    <p>Free to download. Leave your email and we'll send you the link the moment ClearStep goes live on the App Store and Google Play.</p>
     <form class="signup" id="waitlist-form" action="https://formspree.io/f/mjgnodnr" method="POST">
       <input type="email" name="email" id="waitlist-email" placeholder="you@email.com" required>
       <button type="submit" class="btn-primary" style="border:none; cursor:pointer;" id="submit-btn">Notify me on launch day</button>
