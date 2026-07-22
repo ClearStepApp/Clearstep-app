@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClearStep — The next step, not another question</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F1EEE5;
+    --paper-alt: #E7E2D3;
+    --ink: #22261F;
+    --ink-soft: #4A4F42;
+    --moss: #3E5641;
+    --moss-dark: #2B3E30;
+    --gold: #C08536;
+    --gold-soft: #E4C793;
+    --card: #FFFDF7;
+    --rule: #D5CFBB;
+    --max: 1080px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Work Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 { font-family: 'Fraunces', serif; font-weight: 600; margin: 0; color: var(--ink); }
+
+  .mono {
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  a { color: inherit; }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(241,238,229,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-inner{
+    max-width: var(--max); margin:0 auto; padding: 18px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Fraunces', serif; font-weight:700; font-size:1.25rem;
+  }
+  .logo-mark{
+    width:22px; height:22px; border-radius:4px;
+    background: var(--moss);
+    position:relative;
+    flex-shrink:0;
+  }
+  .logo-mark::after{
+    content:"";
+    position:absolute; left:5px; top:4px;
+    width:8px; height:11px;
+    border-right:2.5px solid var(--paper);
+    border-bottom:2.5px solid var(--paper);
+    transform: rotate(45deg) scale(0.8);
+  }
+  .nav-cta{
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem;
+    text-transform:uppercase; letter-spacing:0.08em; font-weight:600;
+    background: var(--moss); color: var(--paper);
+    padding: 10px 18px; border-radius: 3px;
+    text-decoration:none;
+    transition: background 0.15s ease;
+  }
+  .nav-cta:hover{ background: var(--moss-dark); }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding: 88px 0 80px; }
+  .hero-grid{
+    display:grid; grid-template-columns: 1.1fr 0.9fr; gap:56px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-block;
+    font-size: 0.74rem; color: var(--moss-dark);
+    padding: 6px 12px; border: 1px solid var(--moss); border-radius: 20px;
+    margin-bottom: 22px;
+  }
+  .hero h1{
+    font-size: clamp(2.4rem, 4.6vw, 3.6rem);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em{ font-style: italic; color: var(--moss); }
+  .hero p.lede{
+    margin-top: 22px;
+    font-size: 1.14rem;
+    color: var(--ink-soft);
+    max-width: 46ch;
+  }
+  .hero-actions{ margin-top: 34px; display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+  .btn-primary{
+    font-family:'IBM Plex Mono', monospace; font-size:0.82rem;
+    text-transform:uppercase; letter-spacing:0.08em; font-weight:600;
+    background: var(--moss); color: var(--paper);
+    padding: 15px 26px; border-radius: 3px; border:none;
+    cursor:pointer; text-decoration:none; display:inline-block;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .btn-primary:hover{ background: var(--moss-dark); transform: translateY(-1px); }
+  .btn-ghost{
+    font-family:'IBM Plex Mono', monospace; font-size:0.82rem;
+    text-transform:uppercase; letter-spacing:0.08em; font-weight:600;
+    color: var(--ink); text-decoration:none;
+    padding: 15px 4px; border-bottom: 1.5px solid var(--ink);
+  }
+
+  /* Instruction card — signature element */
+  .card{
+    background: var(--card);
+    border-radius: 6px;
+    padding: 26px 26px 22px;
+    box-shadow: 0 18px 40px -18px rgba(34,38,31,0.35);
+    position: relative;
+    transform: rotate(-1.4deg);
+    border: 1px solid var(--rule);
+  }
+  .card::before{
+    content:"";
+    position:absolute; top:-1px; left:16px; right:16px; height:0;
+    border-top: 2px dashed var(--rule);
+  }
+  .card-stamp{
+    display:flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 0.72rem; letter-spacing:0.1em; text-transform:uppercase;
+    color: var(--gold); font-weight:600; margin-bottom: 14px;
+  }
+  .card-stamp::before{
+    content:""; width:7px; height:7px; border-radius:50%; background: var(--gold);
+  }
+  .card-instruction{
+    font-family:'Fraunces', serif; font-size: 1.28rem; line-height:1.4;
+    color: var(--ink); font-weight: 500;
+  }
+  .card-buttons{ display:flex; gap:10px; margin-top: 20px; }
+  .pill{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem;
+    text-transform:uppercase; letter-spacing:0.06em; font-weight:600;
+    padding: 8px 14px; border-radius: 20px;
+  }
+  .pill.done{ background: var(--moss); color: var(--paper); }
+  .pill.skip{ background: transparent; color: var(--ink-soft); border:1px solid var(--rule); }
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  section{ padding: 76px 0; border-top: 1px solid var(--rule); }
+  .section-head{ max-width: 620px; margin-bottom: 46px; }
+  .section-head h2{ font-size: clamp(1.7rem, 3vw, 2.3rem); line-height:1.15; margin-top: 14px; }
+  .section-head p{ margin-top: 16px; color: var(--ink-soft); font-size: 1.04rem; }
+
+  /* ---------- PROBLEM ---------- */
+  .loop-list{
+    display:grid; grid-template-columns: repeat(2, 1fr); gap: 18px 40px;
+    margin-top: 10px;
+  }
+  .loop-item{
+    padding: 20px 0; border-top: 1px solid var(--rule);
+    display:flex; gap:16px;
+  }
+  .loop-item:first-child, .loop-item:nth-child(2){ border-top:none; padding-top:0; }
+  .loop-num{
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color: var(--gold);
+    font-weight:600; flex-shrink:0; padding-top:3px;
+  }
+  .loop-item h3{ font-size: 1.05rem; margin-bottom:6px; }
+  .loop-item p{ margin:0; color: var(--ink-soft); font-size:0.96rem; }
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps-grid{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap: 26px;
+  }
+  .step-card{
+    background: var(--card); border-radius: 6px; padding: 24px 22px;
+    border: 1px solid var(--rule);
+    display:flex; flex-direction:column; gap:14px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .step-card:hover{ transform: translateY(-4px); box-shadow: 0 16px 30px -18px rgba(34,38,31,0.4); }
+  .step-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.68rem; letter-spacing:0.08em;
+    text-transform:uppercase; color: var(--moss); font-weight:600;
+  }
+  .step-context{ font-size:0.9rem; color: var(--ink-soft); font-style:italic; }
+  .step-instruction{
+    font-family:'Fraunces', serif; font-size:1.05rem; line-height:1.45;
+    border-left: 3px solid var(--gold-soft); padding-left: 14px;
+  }
+
+  /* ---------- DIFFERENTIATOR ---------- */
+  .compare{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--rule); border-radius: 8px; overflow:hidden;
+  }
+  .compare-col{ padding: 32px 30px; }
+  .compare-col.old{ background: var(--paper-alt); }
+  .compare-col.new{ background: var(--moss); color: var(--paper); }
+  .compare-col h3{ font-size:1.1rem; margin-bottom:18px; }
+  .compare-col.new h3{ color: var(--paper); }
+  .compare-col ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:14px; }
+  .compare-col li{ font-size:0.95rem; padding-left: 20px; position:relative; }
+  .compare-col.old li::before{ content:"?"; position:absolute; left:0; color: var(--ink-soft); font-family:'IBM Plex Mono',monospace; font-weight:600; }
+  .compare-col.new li::before{ content:"→"; position:absolute; left:0; color: var(--gold-soft); font-family:'IBM Plex Mono',monospace; font-weight:600; }
+
+  /* ---------- SAFETY ---------- */
+  .safety{
+    background: var(--paper-alt);
+    border-radius: 8px;
+    padding: 34px 34px;
+    display:flex; gap:24px; align-items:flex-start;
+  }
+  .safety-icon{
+    width:38px; height:38px; border-radius:50%; background:var(--moss); flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--paper); font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:1rem;
+  }
+  .safety h3{ font-size:1.1rem; margin-bottom:8px; }
+  .safety p{ margin:0; color: var(--ink-soft); font-size:0.97rem; max-width: 60ch; }
+
+  /* ---------- CTA ---------- */
+  .cta{
+    text-align:center; padding: 90px 0 100px;
+  }
+  .cta h2{ font-size: clamp(2rem, 4vw, 2.8rem); max-width: 16ch; margin: 0 auto; line-height:1.15; }
+  .cta p{ color: var(--ink-soft); margin: 18px auto 0; max-width: 46ch; }
+  .signup{
+    margin: 34px auto 0; display:flex; gap:10px; justify-content:center; max-width: 420px;
+    flex-wrap:wrap;
+  }
+  .signup input{
+    flex:1; min-width: 220px;
+    padding: 14px 16px; border-radius:3px; border:1px solid var(--rule);
+    background: var(--card); font-family:'Work Sans',sans-serif; font-size:0.96rem;
+    color: var(--ink);
+  }
+  .signup input:focus{ outline: 2px solid var(--moss); outline-offset:1px; }
+  .signup-note{ margin-top:14px; font-size:0.82rem; color: var(--ink-soft); }
+  .form-msg{ margin-top:16px; font-family:'IBM Plex Mono',monospace; font-size:0.85rem; color: var(--moss-dark); min-height:1.2em; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ border-top: 1px solid var(--rule); padding: 40px 0; }
+  .footer-inner{ display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; align-items:flex-start; }
+  .footer-disclaimer{ font-size: 0.82rem; color: var(--ink-soft); max-width: 52ch; line-height:1.6; }
+  .footer-logo{ font-family:'Fraunces',serif; font-weight:700; font-size:1rem; color: var(--moss-dark); }
+
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .hero{ padding: 56px 0 60px; }
+    .card{ transform: rotate(0deg); }
+    .loop-list{ grid-template-columns: 1fr; }
+    .loop-item:nth-child(2){ padding-top:20px; border-top:1px solid var(--rule); }
+    .steps-grid{ grid-template-columns: 1fr; }
+    .compare{ grid-template-columns: 1fr; }
+    .safety{ flex-direction:column; }
+    .footer-inner{ flex-direction:column; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="logo"><span class="logo-mark"></span>ClearStep</div>
+    <a href="#join" class="nav-cta">Join the waitlist</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow mono">Built for ADHD + social anxiety</span>
+      <h1>Skip the reflection.<br>Get <em>the step</em>.</h1>
+      <p class="lede">ClearStep is a CBT-based app that gives you one clear instruction at a time. No journaling prompts. No "how does that make you feel?" Just the next thing to do.</p>
+      <div class="hero-actions">
+        <a href="#join" class="btn-primary">Join the waitlist</a>
+        <a href="#how" class="btn-ghost">See how it works</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-stamp">Today's step</div>
+      <div class="card-instruction">Set a timer for 5 minutes. Clear only the kitchen counter. Start when you're ready.</div>
+      <div class="card-buttons">
+        <span class="pill done">Done</span>
+        <span class="pill skip">Skip for now</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="access">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow mono">Why an app</span>
+      <h2>Therapy is out of reach for most people.</h2>
+      <p>CBT works. Getting to it is the hard part — and that gap is exactly what keeps people stuck in the loop instead of working through it.</p>
+    </div>
+    <div class="loop-list">
+      <div class="loop-item" style="border-top:none; padding-top:0;">
+        <span class="loop-num mono">Wait</span>
+        <div><h3>Waitlists run for months</h3><p>By the time an appointment comes up, the motivation or crisis that pushed you to book it has often already passed.</p></div>
+      </div>
+      <div class="loop-item" style="border-top:none; padding-top:0;">
+        <span class="loop-num mono">Cost</span>
+        <div><h3>Sessions add up fast</h3><p>Weekly therapy is priced out of reach for a lot of the people who'd benefit from it most.</p></div>
+      </div>
+      <div class="loop-item">
+        <span class="loop-num mono">Door</span>
+        <div><h3>Walking in is its own barrier</h3><p>For social anxiety specifically, booking a call or sitting in a waiting room can be the hardest step in the whole process — before the help even starts.</p></div>
+      </div>
+      <div class="loop-item">
+        <span class="loop-num mono">Fit</span>
+        <div><h3>Generic support doesn't stick</h3><p>Most tools that are accessible aren't built for how ADHD and social anxiety actually show up day to day, so they get abandoned.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problem">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow mono">The loop</span>
+      <h2>Knowing what to do was never the problem.</h2>
+      <p>ADHD and social anxiety feed each other. Most CBT apps treat them as separate issues and hand you a blank page to figure it out on your own. That's exactly where the loop wins.</p>
+    </div>
+    <div class="loop-list">
+      <div class="loop-item">
+        <span class="loop-num mono">01</span>
+        <div><h3>Starting feels impossible</h3><p>Not laziness — a brain that struggles to initiate tasks without urgency or immediate reward. Job hunting, cleaning, admin all stall at the same point: the start.</p></div>
+      </div>
+      <div class="loop-item">
+        <span class="loop-num mono">02</span>
+        <div><h3>Avoidance shrinks your options</h3><p>A situation feels exposing, so you route around it — the job you don't apply for, the plans you skip. Each avoidance quietly narrows what feels possible next time.</p></div>
+      </div>
+      <div class="loop-item">
+        <span class="loop-num mono">03</span>
+        <div><h3>Rejection sensitivity amplifies it</h3><p>A small social slip gets read as proof something is wrong with you, which makes the next situation feel even riskier to approach.</p></div>
+      </div>
+      <div class="loop-item">
+        <span class="loop-num mono">04</span>
+        <div><h3>Low motivation sets back in</h3><p>Less exposure and more self-criticism drain the energy needed to start again — and the loop resets.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow mono">How it works</span>
+      <h2>The app talks first. You just follow the thread.</h2>
+      <p>Every interaction ends in one concrete action — never an open question you have to sit with.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <span class="step-tag">Task initiation</span>
+        <span class="step-context">"Cleaning the flat feels overwhelming."</span>
+        <div class="step-instruction">Set a timer for 5 minutes. Clear only the kitchen counter. Start when ready.</div>
+      </div>
+      <div class="step-card">
+        <span class="step-tag">Graded exposure</span>
+        <span class="step-context">Avoidance, one size smaller at a time.</span>
+        <div class="step-instruction">Today's challenge: stand outside your front door for 3 minutes. No further. Come back when done.</div>
+      </div>
+      <div class="step-card">
+        <span class="step-tag">After a hard moment</span>
+        <span class="step-context">A quick tap, not an essay.</span>
+        <div class="step-instruction">How did that feel? Overwhelmed · Kept it together · Not sure — tap one, get your next move.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="different">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow mono">Why it's different</span>
+      <h2>Other apps ask. ClearStep tells.</h2>
+    </div>
+    <div class="compare">
+      <div class="compare-col old">
+        <h3 class="mono" style="font-family:'IBM Plex Mono',monospace; text-transform:uppercase; font-size:0.85rem; letter-spacing:0.06em;">Typical CBT app</h3>
+        <ul>
+          <li>"How are you feeling about that?"</li>
+          <li>Long journaling entries with a blank text box</li>
+          <li>20-minute guided modules</li>
+          <li>Generic anxiety content, not ADHD-specific</li>
+          <li>You decide what to work on today</li>
+        </ul>
+      </div>
+      <div class="compare-col new">
+        <h3 class="mono" style="font-family:'IBM Plex Mono',monospace; text-transform:uppercase; font-size:0.85rem; letter-spacing:0.06em;">ClearStep</h3>
+        <ul>
+          <li>Tap a mood, get a directed next step</li>
+          <li>Two-minute check-ins, no typing required</li>
+          <li>One instruction, one action, done</li>
+          <li>Built around ADHD patterns: RSD, time blindness, avoidance</li>
+          <li>The app decides — you just follow it</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="safety">
+  <div class="wrap">
+    <div class="safety">
+      <div class="safety-icon">i</div>
+      <div>
+        <h3>A support tool, not a replacement</h3>
+        <p>ClearStep is designed with clinical advisors and built to recognise when a situation needs more than an app — and to point you toward real help when it does. It does not replace therapy or psychiatric care.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="join" class="cta">
+  <div class="wrap">
+    <h2>Be first to try ClearStep</h2>
+    <p>We're opening early access soon. Leave your email and we'll send you the first step.</p>
+    <form class="signup" id="waitlist-form">
+      <input type="email" id="waitlist-email" placeholder="you@email.com" required>
+      <button type="submit" class="btn-primary" style="border:none; cursor:pointer;">Join the waitlist</button>
+    </form>
+    <div class="form-msg" id="form-msg"></div>
+    <p class="signup-note">No spam. Just one email when early access opens.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="footer-logo">ClearStep</div>
+    <p class="footer-disclaimer">ClearStep is a self-guided support tool and does not replace professional mental health treatment. If you are in crisis or thinking about harming yourself, contact your local emergency services or a crisis line in your country right away.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('waitlist-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var email = document.getElementById('waitlist-email').value;
+    var msg = document.getElementById('form-msg');
+    if(email){
+      msg.textContent = "You're on the list — we'll be in touch.";
+      document.getElementById('waitlist-email').value = '';
+    }
+  });
+</script>
+
+</body>
+</html>
