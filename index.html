@@ -110,7 +110,17 @@
     color: var(--ink-soft);
     max-width: 46ch;
   }
-  .hero-actions{ margin-top: 34px; display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+  .launch-note{
+    margin-top: 24px;
+    display:inline-flex; align-items:center; gap:8px;
+    font-size: 0.72rem; color: var(--moss-dark);
+    background: var(--gold-soft);
+    padding: 8px 14px; border-radius: 20px;
+  }
+  .launch-note::before{
+    content:""; width:6px; height:6px; border-radius:50%; background: var(--moss-dark);
+  }
+  .hero-actions{ margin-top: 22px; display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
   .btn-primary{
     font-family:'IBM Plex Mono', monospace; font-size:0.82rem;
     text-transform:uppercase; letter-spacing:0.08em; font-weight:600;
@@ -286,7 +296,7 @@
 <header class="nav">
   <div class="nav-inner">
     <div class="logo"><span class="logo-mark"></span>ClearStep</div>
-    <a href="#join" class="nav-cta">Join the waitlist</a>
+    <a href="#join" class="nav-cta">Get notified</a>
   </div>
 </header>
 
@@ -296,8 +306,9 @@
       <span class="eyebrow mono">Built for ADHD + social anxiety</span>
       <h1>Skip the reflection.<br>Get <em>the step</em>.</h1>
       <p class="lede">ClearStep is a CBT-based app that gives you one clear instruction at a time. No journaling prompts. No "how does that make you feel?" Just the next thing to do.</p>
+      <div class="launch-note mono">Launching on iOS &amp; Android — July 30, 2026</div>
       <div class="hero-actions">
-        <a href="#join" class="btn-primary">Join the waitlist</a>
+        <a href="#join" class="btn-primary">Get notified at launch</a>
         <a href="#how" class="btn-ghost">See how it works</a>
       </div>
     </div>
@@ -440,14 +451,15 @@
 
 <section id="join" class="cta">
   <div class="wrap">
-    <h2>Be first to try ClearStep</h2>
-    <p>We're opening early access soon. Leave your email and we'll send you the first step.</p>
-    <form class="signup" id="waitlist-form">
-      <input type="email" id="waitlist-email" placeholder="you@email.com" required>
-      <button type="submit" class="btn-primary" style="border:none; cursor:pointer;">Join the waitlist</button>
+    <span class="eyebrow mono" style="margin-bottom:18px;">iOS &amp; Android — July 30, 2026</span>
+    <h2>Be first to download ClearStep</h2>
+    <p>Leave your email and we'll send you the download link the moment ClearStep goes live on the App Store and Google Play.</p>
+    <form class="signup" id="waitlist-form" action="https://formspree.io/f/mjgnodnr" method="POST">
+      <input type="email" name="email" id="waitlist-email" placeholder="you@email.com" required>
+      <button type="submit" class="btn-primary" style="border:none; cursor:pointer;" id="submit-btn">Notify me on launch day</button>
     </form>
     <div class="form-msg" id="form-msg"></div>
-    <p class="signup-note">No spam. Just one email when early access opens.</p>
+    <p class="signup-note">No spam. One email on July 30, 2026, with your download link.</p>
   </div>
 </section>
 
@@ -459,14 +471,40 @@
 </footer>
 
 <script>
-  document.getElementById('waitlist-form').addEventListener('submit', function(e){
+  var form = document.getElementById('waitlist-form');
+  var msg = document.getElementById('form-msg');
+  var btn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', function(e){
     e.preventDefault();
-    var email = document.getElementById('waitlist-email').value;
-    var msg = document.getElementById('form-msg');
-    if(email){
-      msg.textContent = "You're on the list — we'll be in touch.";
-      document.getElementById('waitlist-email').value = '';
-    }
+    var emailInput = document.getElementById('waitlist-email');
+    var email = emailInput.value;
+    if(!email) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    msg.textContent = '';
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(function(response){
+      if(response.ok){
+        msg.textContent = "You're on the list — we'll email your download link on July 30, 2026.";
+        emailInput.value = '';
+      } else {
+        msg.textContent = "Something went wrong. Please try again or email us directly.";
+      }
+    })
+    .catch(function(){
+      msg.textContent = "Something went wrong. Please try again or email us directly.";
+    })
+    .finally(function(){
+      btn.disabled = false;
+      btn.textContent = 'Notify me on launch day';
+    });
   });
 </script>
 
